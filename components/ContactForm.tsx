@@ -14,11 +14,16 @@ export default function ContactForm() {
     const form = e.currentTarget;
     const data = new FormData(form);
 
+    // Build an encoded body by iterating FormData entries explicitly.
+    // Casting FormData to URLSearchParams silently produces an empty body.
+    const encoded = new URLSearchParams();
+    data.forEach((value, key) => encoded.append(key, value.toString()));
+
     try {
       const res = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+        body: encoded.toString(),
       });
 
       if (res.ok) {

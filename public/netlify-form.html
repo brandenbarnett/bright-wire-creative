@@ -2,15 +2,22 @@
 <html>
   <body>
     <!--
-      This file exists solely so Netlify's build bot detects and registers
-      the "contact" form. The actual form lives in app/contact/page.tsx and
-      submits via JavaScript fetch. Both forms must share the same `name`
-      attribute ("contact") for submissions to be captured correctly.
+      Netlify's build bot reads this static file to register the "contact"
+      form. The live form is in components/ContactForm.tsx and submits via
+      fetch(). Field names, form name, and data-netlify-honeypot must all
+      match between this file and the fetch() POST body.
     -->
-    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
-      <input type="text" name="name" />
-      <input type="email" name="email" />
-      <textarea name="message"></textarea>
+    <form
+      name="contact"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="text"   name="bot-field" />
+      <input type="text"   name="name" />
+      <input type="email"  name="email" />
+      <textarea            name="message"></textarea>
     </form>
   </body>
 </html>
