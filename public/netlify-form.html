@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <!--
+      This file exists solely so Netlify's build bot detects and registers
+      the "contact" form. The actual form lives in app/contact/page.tsx and
+      submits via JavaScript fetch. Both forms must share the same `name`
+      attribute ("contact") for submissions to be captured correctly.
+    -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>
