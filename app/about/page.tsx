@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -43,32 +44,15 @@ export default function AboutPage() {
               <p className="text-xs tracking-[0.3em] text-stone-500 uppercase mb-6">
                 01 — Who I Am
               </p>
-              {/*
-                HEADSHOT PLACEHOLDER
-                When your photo is ready:
-                1. Drop the file into /public/ (e.g. /public/branden-headshot.jpg)
-                2. Replace this entire block with:
-                   <Image
-                     src="/branden-headshot.jpg"
-                     alt="Branden Barnett"
-                     width={480}
-                     height={640}
-                     className="w-full h-auto"
-                     priority
-                   />
-                   (import Image from "next/image" at the top of the file)
-              */}
               <div className="relative mt-8 lg:mt-0">
-                <div className="aspect-[3/4] w-full max-w-xs mx-auto lg:max-w-none bg-stone-800 border border-stone-700/50 flex flex-col items-center justify-center gap-3 p-6">
-                  <div className="w-10 h-10 rounded-full border border-stone-600 flex items-center justify-center">
-                    <span className="text-stone-600 text-lg">↑</span>
-                  </div>
-                  <p className="text-stone-600 text-xs tracking-[0.2em] uppercase text-center">
-                    Studio headshot
-                    <br />
-                    coming soon
-                  </p>
-                </div>
+                <Image
+                  src="/branden-headshot-hero.jpg"
+                  alt="Branden Barnett — licensed psychotherapist and songwriter, St. Petersburg FL"
+                  width={896}
+                  height={1195}
+                  className="w-full h-auto"
+                  priority
+                />
                 <div className="absolute -bottom-4 -right-4 w-full h-full border border-gold/20 -z-10" />
               </div>
             </div>
