@@ -4,6 +4,8 @@ import { useState } from "react";
 
 type Status = "idle" | "sending" | "success" | "error";
 
+const WEB3FORMS_KEY = "f409e735-a913-43ad-ae13-f3f17f694560";
+
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
 
@@ -11,24 +13,29 @@ export default function ContactForm() {
     e.preventDefault();
     setStatus("sending");
 
-    const form = e.currentTarget;
-    const data = new FormData(form);
-
-    // Build an encoded body by iterating FormData entries explicitly.
-    // Casting FormData to URLSearchParams silently produces an empty body.
-    const encoded = new URLSearchParams();
-    data.forEach((value, key) => encoded.append(key, value.toString()));
+    const data = new FormData(e.currentTarget);
 
     try {
-      const res = await fetch("/", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encoded.toString(),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          name: data.get("name"),
+          email: data.get("email"),
+          message: data.get("message"),
+          subject: "New consultation request — Bright Wire Creative",
+        }),
       });
 
-      if (res.ok) {
+      const json = await res.json();
+
+      if (json.success) {
         setStatus("success");
-        form.reset();
+        e.currentTarget.reset();
       } else {
         setStatus("error");
       }
@@ -52,25 +59,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form
-      name="contact"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      onSubmit={handleSubmit}
-      className="space-y-7"
-    >
-      {/* Required hidden fields for Netlify */}
-      <input type="hidden" name="form-name" value="contact" />
-
-      {/* Honeypot — hidden from real users, catches bots */}
-      <div className="hidden" aria-hidden="true">
-        <label>
-          Don&apos;t fill this out
-          <input name="bot-field" tabIndex={-1} autoComplete="off" />
-        </label>
-      </div>
-
+    <form onSubmit={handleSubmit} className="space-y-7">
       {/* Name */}
       <div>
         <label
