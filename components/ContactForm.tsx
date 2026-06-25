@@ -13,7 +13,9 @@ export default function ContactForm() {
     e.preventDefault();
     setStatus("sending");
 
-    const data = new FormData(e.currentTarget);
+    // Capture before any await — e.currentTarget is nullified after the first yield
+    const form = e.currentTarget;
+    const data = new FormData(form);
 
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
@@ -35,7 +37,7 @@ export default function ContactForm() {
 
       if (json.success) {
         setStatus("success");
-        e.currentTarget.reset();
+        form.reset();
       } else {
         setStatus("error");
       }
